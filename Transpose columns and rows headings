@@ -1,0 +1,25 @@
+
+
+#your code here
+
+url = "https://raw.githubusercontent.com/cs109/2014_data/master/countries.csv"
+s = StringIO.StringIO(requests.get(url).content)
+countries = pd.read_csv(s)
+countries.head()
+
+
+
+#your code here
+
+income_link = 'https://spreadsheets.google.com/pub?key=phAwcNAVuyj1jiMAkmq1iMg&output=xls'
+source = StringIO.StringIO(requests.get(income_link).content)
+income = pd.read_excel(source, sheetname = "Data")
+income.head()
+
+#your code here
+
+income.index=income[income.columns[0]] # Make the countries as the index
+income = income.drop(income.columns[0], axis = 1) 
+income.columns = map(lambda x: int(x), income.columns) # Convert years from floats to ints
+income = income.transpose()
+income.head()
